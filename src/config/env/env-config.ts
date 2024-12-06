@@ -10,6 +10,7 @@ export const environmentVariablesSchema = z.object({
   ALPHA_VANTAGE_URL: z.string().optional(),
   ALPHA_VANTAGE_API_URL: z.string().optional(),
   ALPHA_VANTAGE_API_KEY: z.string().optional(),
+  DATABOX_API_KEY: z.string().optional(),
 });
 
 export type EnvironmentVariables = z.infer<typeof environmentVariablesSchema>;

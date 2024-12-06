@@ -7,6 +7,7 @@ import { isTestEnv } from '@app/common/helpers/env-check';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DataFetchingModule } from '@app/modules/data-fetching/data.fetching.module';
+import { DataboxModule } from '@app/modules/databox/databox.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { DataFetchingModule } from '@app/modules/data-fetching/data.fetching.mod
     EventEmitterModule.forRoot(),
     ScheduleModule.forRoot(),
     DataFetchingModule,
+    DataboxModule,
   ],
   controllers: [AppController],
   providers: [AppService],
