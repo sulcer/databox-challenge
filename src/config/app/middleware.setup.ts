@@ -5,6 +5,7 @@ import compression from 'compression';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { HttpExceptionFilter } from '@app/common/exceptions/filters/http-exception.filter';
+import { LoggingInterceptor } from '@app/common/interceptors/logging.interceptor';
 
 export class MiddlewareSetup extends BaseSetup {
   constructor(protected readonly app: NestExpressApplication) {
@@ -17,6 +18,7 @@ export class MiddlewareSetup extends BaseSetup {
     this.setupCompression();
     this.setupPipes();
     this.setupFilters();
+    this.setupInterceptors();
     this.setupShutdownHooks();
     console.log('Middleware setup complete');
   }
@@ -43,6 +45,10 @@ export class MiddlewareSetup extends BaseSetup {
   private setupFilters() {
     const adapterHost = this.app.get(HttpAdapterHost);
     this.app.useGlobalFilters(new HttpExceptionFilter(adapterHost));
+  }
+
+  private setupInterceptors() {
+    this.app.useGlobalInterceptors(new LoggingInterceptor());
   }
 
   private setupShutdownHooks(): void {
