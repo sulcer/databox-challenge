@@ -1,5 +1,5 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { DataFetchingService } from '@app/modules/data-fetching/data-fetching.service';
 
 @ApiTags('Data Fetching')
@@ -8,8 +8,17 @@ export class DataFetchingController {
   constructor(private readonly dataFetchingService: DataFetchingService) {}
 
   @ApiOperation({ summary: 'Fetch data from Alpaca API' })
-  @Get()
-  async getData() {
-    return await this.dataFetchingService.fetchData();
+  @Get('latestCryptoBars')
+  async getData(@Query('symbols') symbols: string) {
+    return await this.dataFetchingService.fetchLatestCryptoBars(symbols);
+  }
+
+  @ApiOperation({ summary: 'Fetch data from Alpha Vantage API' })
+  @Get('stockIntraDay')
+  async getDataAV(
+    @Query('symbol') symbol: string,
+    @Query('interval') interval: string,
+  ) {
+    return await this.dataFetchingService.fetchStockIntraDay(symbol, interval);
   }
 }
