@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerSetup } from '@app/config/app/swagger.setup';
+import { MiddlewareSetup } from '@app/config/app/middleware.setup';
 import { Logger } from '@nestjs/common';
 import { loadEnv } from '@app/config/env/dotenv';
 
@@ -12,6 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
 
+  new MiddlewareSetup(app).init();
   new SwaggerSetup(app).init();
 
   const PORT = configService.get('PORT') ?? 3000;
