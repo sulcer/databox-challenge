@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-import { AlpacaResponse } from '@app/modules/data-fetching/interface/data.fetching.interface';
+import {
+  AlpacaResponse,
+  AlphaVantageResponse,
+} from '@app/modules/data-fetching/interface/data.fetching.interface';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -34,7 +37,10 @@ export class DataFetchingService {
     }
   }
 
-  async fetchStockIntraDay(symbol: string, interval: string): Promise<any> {
+  async fetchStockIntraDay(
+    symbol: string,
+    interval: string,
+  ): Promise<AlphaVantageResponse> {
     const params = {
       function: 'TIME_SERIES_INTRADAY',
       symbol,
