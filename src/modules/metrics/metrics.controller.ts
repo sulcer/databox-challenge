@@ -11,4 +11,9 @@ export class MetricsController {
   async getLatestCryptoPrice() {
     return await this.metricsService.sendLatestCryptoPrice();
   }
+
+  @Get('stockIntraDay')
+  async getStockIntraDay() {
+    return await this.metricsService.sendStockIntraDay();
+  }
 }

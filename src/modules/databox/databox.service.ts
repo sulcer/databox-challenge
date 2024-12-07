@@ -25,22 +25,24 @@ export class DataboxService {
   }
 
   async pushData(
-    metricName: string,
-    value: number,
-    date: string,
-    unit?: string,
-    attributes?: { key: string; value: string }[],
+    data: {
+      metricName: string;
+      value: number;
+      date: string;
+      unit?: string;
+      attributes?: { key: string; value: string }[];
+    }[],
   ): Promise<DataboxResponse> {
+    const pushDataArray = data.map((item) => ({
+      key: item.metricName,
+      value: item.value,
+      date: item.date,
+      unit: item.unit,
+      attributes: item.attributes,
+    }));
+
     const dataPostRequest: DataPostRequest = {
-      pushData: [
-        {
-          key: metricName,
-          value,
-          date,
-          unit,
-          attributes,
-        },
-      ],
+      pushData: pushDataArray,
     };
 
     try {

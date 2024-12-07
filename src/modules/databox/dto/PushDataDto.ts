@@ -1,10 +1,13 @@
 import {
   IsNotEmpty,
-  IsOptional,
   IsString,
   IsNumber,
+  IsOptional,
   IsArray,
+  ArrayNotEmpty,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class PushDataDto {
   @IsNotEmpty()
@@ -25,5 +28,16 @@ export class PushDataDto {
 
   @IsOptional()
   @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => Object)
   attributes?: { key: string; value: string }[];
+}
+
+export class PushDataArrayDto {
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => PushDataDto)
+  data: PushDataDto[];
 }
