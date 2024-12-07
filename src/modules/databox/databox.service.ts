@@ -6,6 +6,7 @@ import {
   DataPostRequest,
   DefaultApi,
 } from 'databox';
+import { DataboxResponse } from '@app/modules/databox/interface/databox.interface';
 
 @Injectable()
 export class DataboxService {
@@ -29,7 +30,7 @@ export class DataboxService {
     date: string,
     unit?: string,
     attributes?: { key: string; value: string }[],
-  ): Promise<any> {
+  ): Promise<DataboxResponse> {
     const dataPostRequest: DataPostRequest = {
       pushData: [
         {

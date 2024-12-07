@@ -8,6 +8,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DataFetchingModule } from '@app/modules/data-fetching/data.fetching.module';
 import { DataboxModule } from '@app/modules/databox/databox.module';
+import { MetricsModule } from '@app/modules/metrics/metrics.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DataboxModule } from '@app/modules/databox/databox.module';
     ScheduleModule.forRoot(),
     DataFetchingModule,
     DataboxModule,
+    MetricsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

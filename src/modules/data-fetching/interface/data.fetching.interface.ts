@@ -11,7 +11,7 @@ interface Bar {
 
 export interface AlpacaResponse {
   bars: {
-    [symbol: string]: Bar[];
+    [symbol: string]: Bar;
   };
 }
 
