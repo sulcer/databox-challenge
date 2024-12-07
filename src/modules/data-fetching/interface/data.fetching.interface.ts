@@ -9,7 +9,7 @@ interface Bar {
   vw: number; // Volume-weighted average price
 }
 
-export interface AlpacaResponse {
+export interface AlpacaBarsResponse {
   bars: {
     [symbol: string]: Bar;
   };
@@ -35,4 +35,18 @@ interface TimeSeriesEntry {
 export interface AlphaVantageResponse {
   metaData: AVMetaData;
   timeSeries: Record<string, TimeSeriesEntry>;
+}
+
+interface OrderbookEntry {
+  p: number; // Price
+  s: number; // Size
+}
+
+interface Orderbook {
+  a: OrderbookEntry[]; // Asks
+  b: OrderbookEntry[]; // Bids
+}
+
+export interface AlpacaOrderbooksResponse {
+  orderbooks: Record<string, Orderbook>;
 }
