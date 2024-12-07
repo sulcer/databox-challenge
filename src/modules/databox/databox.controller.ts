@@ -4,7 +4,7 @@ import { DataboxService } from '@app/modules/databox/databox.service';
 import { PushDataArrayDto } from '@app/modules/databox/dto/PushDataDto';
 
 @ApiTags('Databox')
-@Controller('Databox')
+@Controller('databox')
 export class DataboxController {
   constructor(private readonly databoxService: DataboxService) {}
 

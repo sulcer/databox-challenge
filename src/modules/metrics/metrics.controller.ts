@@ -3,7 +3,7 @@ import { Controller, Post } from '@nestjs/common';
 import { MetricsService } from '@app/modules/metrics/metrics.service';
 
 @ApiTags('Metrics')
-@Controller('Metrics')
+@Controller('metrics')
 export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
@@ -11,7 +11,7 @@ export class MetricsController {
   @ApiOkResponse({
     description: 'Latest Crypto Price sent to Databox successfully',
   })
-  @Post('latestCryptoPrice')
+  @Post('latest-crypto-price')
   async getLatestCryptoPrice() {
     return await this.metricsService.sendLatestCryptoPrice();
   }
@@ -20,7 +20,7 @@ export class MetricsController {
   @ApiOkResponse({
     description: 'Stock Intra Day sent to Databox successfully',
   })
-  @Post('stockIntraDay')
+  @Post('stock-intra-day')
   async getStockIntraDay() {
     return await this.metricsService.sendStockIntraDay();
   }
@@ -29,7 +29,7 @@ export class MetricsController {
   @ApiOkResponse({
     description: 'Stock Volume sent to Databox successfully',
   })
-  @Post('stockVolume')
+  @Post('stock-volume')
   async getStockVolume() {
     return await this.metricsService.sendStockVolume();
   }
@@ -38,7 +38,7 @@ export class MetricsController {
   @ApiOkResponse({
     description: 'Latest Crypto Order Books sent to Databox successfully',
   })
-  @Post('cryptoOrderBooks')
+  @Post('crypto-order-books')
   async getCryptoOrderBooks() {
     return await this.metricsService.sendLatestCryptoOrderBooks();
   }
