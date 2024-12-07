@@ -41,7 +41,6 @@ export class DataFetchingService {
   async fetchLatestCryptoOrderBooks(
     symbols: string,
   ): Promise<AlpacaOrderbooksResponse> {
-    // url: 'https://data.alpaca.markets/v1beta3/crypto/us/latest/orderbooks?symbols=BTC%2FUSD
     try {
       const response = await firstValueFrom(
         this.httpService.get(`${this.apiUrl}/latest/orderbooks`, {
