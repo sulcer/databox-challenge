@@ -37,7 +37,7 @@ export interface AlphaVantageResponse {
   timeSeries: Record<string, TimeSeriesEntry>;
 }
 
-interface OrderbookEntry {
+export interface OrderbookEntry {
   p: number; // Price
   s: number; // Size
 }
@@ -45,6 +45,7 @@ interface OrderbookEntry {
 interface Orderbook {
   a: OrderbookEntry[]; // Asks
   b: OrderbookEntry[]; // Bids
+  t: string; // Timestamp
 }
 
 export interface AlpacaOrderbooksResponse {

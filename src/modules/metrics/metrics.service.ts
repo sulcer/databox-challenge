@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataFetchingService } from '@app/modules/data-fetching/data-fetching.service';
 import { DataboxService } from '@app/modules/databox/databox.service';
+import { OrderbookEntry } from '@app/modules/data-fetching/interface/data.fetching.interface';
 
 @Injectable()
 export class MetricsService {
@@ -62,5 +63,62 @@ export class MetricsService {
     }));
 
     return await this.databoxService.pushData(data);
+  }
+
+  async sendStockVolume() {
+    const response = await this.dataFetchingService.fetchDailyStockVolume(
+      this.stockSymbol,
+    );
+
+    const timeSeries = response['Time Series (Daily)'];
+
+    const latestData = Object.keys(timeSeries).map((key) => ({
+      timestamp: key,
+      ...timeSeries[key],
+    }));
+
+    latestData.reverse();
+
+    const data = latestData.map((item) => ({
+      metricName: 'stockVolume',
+      value: item['5. volume'],
+      date: item.timestamp,
+    }));
+
+    return await this.databoxService.pushData(data);
+  }
+
+  async sendLatestCryptoOrderBooks() {
+    try {
+      const { orderbooks } =
+        await this.dataFetchingService.fetchLatestCryptoOrderBooks(
+          this.cryptoSymbol,
+        );
+
+      const { t: timestamp, a: asks, b: bids } = orderbooks[this.cryptoSymbol];
+      const date = new Date(timestamp).toISOString();
+
+      const mapOrderData = (orders: OrderbookEntry[], metricName: string) =>
+        orders.map((item) => ({
+          metricName,
+          value: item.p,
+          date,
+          unit: this.currency,
+          attributes: [{ key: 'size', value: item.s.toString() }],
+        }));
+
+      const askData = mapOrderData(asks, 'latestCryptoAsk');
+      const bidData = mapOrderData(bids, 'latestCryptoBid');
+
+      const askResponse = await this.databoxService.pushData(askData);
+      const bidResponse = await this.databoxService.pushData(bidData);
+
+      return {
+        success: bidResponse.status === 'OK' && askResponse.status === 'OK',
+      };
+    } catch (error) {
+      console.error('Error sending data to Databox:', error);
+      return { success: false };
+    }
   }
 }
