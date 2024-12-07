@@ -35,6 +35,40 @@ export class MetricsService {
     return await this.databoxService.pushData(data);
   }
 
+  async sendLatestCryptoOrderBooks() {
+    try {
+      const { orderbooks } =
+        await this.dataFetchingService.fetchLatestCryptoOrderBooks(
+          this.cryptoSymbol,
+        );
+
+      const { t: timestamp, a: asks, b: bids } = orderbooks[this.cryptoSymbol];
+      const date = new Date(timestamp).toISOString();
+
+      const mapOrderData = (orders: OrderbookEntry[], metricName: string) =>
+        orders.map((item) => ({
+          metricName,
+          value: item.p,
+          date,
+          unit: this.currency,
+          attributes: [{ key: 'size', value: item.s.toString() }],
+        }));
+
+      const askData = mapOrderData(asks, 'latestCryptoAsk');
+      const bidData = mapOrderData(bids, 'latestCryptoBid');
+
+      const askResponse = await this.databoxService.pushData(askData);
+      const bidResponse = await this.databoxService.pushData(bidData);
+
+      return {
+        success: bidResponse.status === 'OK' && askResponse.status === 'OK',
+      };
+    } catch (error) {
+      console.error('Error sending data to Databox:', error);
+      return { success: false };
+    }
+  }
+
   async sendStockIntraDay() {
     const response = await this.dataFetchingService.fetchStockIntraDay(
       this.stockSymbol,
@@ -86,39 +120,5 @@ export class MetricsService {
     }));
 
     return await this.databoxService.pushData(data);
-  }
-
-  async sendLatestCryptoOrderBooks() {
-    try {
-      const { orderbooks } =
-        await this.dataFetchingService.fetchLatestCryptoOrderBooks(
-          this.cryptoSymbol,
-        );
-
-      const { t: timestamp, a: asks, b: bids } = orderbooks[this.cryptoSymbol];
-      const date = new Date(timestamp).toISOString();
-
-      const mapOrderData = (orders: OrderbookEntry[], metricName: string) =>
-        orders.map((item) => ({
-          metricName,
-          value: item.p,
-          date,
-          unit: this.currency,
-          attributes: [{ key: 'size', value: item.s.toString() }],
-        }));
-
-      const askData = mapOrderData(asks, 'latestCryptoAsk');
-      const bidData = mapOrderData(bids, 'latestCryptoBid');
-
-      const askResponse = await this.databoxService.pushData(askData);
-      const bidResponse = await this.databoxService.pushData(bidData);
-
-      return {
-        success: bidResponse.status === 'OK' && askResponse.status === 'OK',
-      };
-    } catch (error) {
-      console.error('Error sending data to Databox:', error);
-      return { success: false };
-    }
   }
 }
