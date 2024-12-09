@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   ApiResponse,
@@ -7,12 +7,16 @@ import {
   DefaultApi,
 } from 'databox';
 import { DataboxResponse } from '@app/modules/databox/interface/databox.interface';
+import { CustomLogger } from '@app/logger/logger.service';
 
 @Injectable()
 export class DataboxService {
   private readonly api: DefaultApi;
 
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService,
+    @Inject('Logger') private readonly logger: CustomLogger,
+  ) {
     const config: Configuration = new Configuration({
       basePath: 'https://push.databox.com',
       username: this.configService.get('DATABOX_API_KEY'),
@@ -50,6 +54,10 @@ export class DataboxService {
         await this.api.dataPostRaw(dataPostRequest);
       const responseBody = await response.raw.json();
       console.log('Data pushed successfully:', responseBody);
+      this.logger.log(
+        `Data: ${JSON.stringify(pushDataArray)}, Response: ${JSON.stringify(responseBody)}`,
+        'DataboxService',
+      );
       return responseBody;
     } catch (error) {
       console.log('Error pushing data:', error);

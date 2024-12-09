@@ -10,6 +10,7 @@ import { DataFetchingModule } from '@app/modules/data-fetching/data-fetching.mod
 import { DataboxModule } from '@app/modules/databox/databox.module';
 import { MetricsModule } from '@app/modules/metrics/metrics.module';
 import { AuthModule } from '@app/modules/auth/auth.module';
+import { LoggerModule } from '@app/logger/logger.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from '@app/modules/auth/auth.module';
     DataboxModule,
     MetricsModule,
     AuthModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
