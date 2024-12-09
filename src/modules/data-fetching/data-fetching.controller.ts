@@ -1,9 +1,10 @@
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query } from '@nestjs/common';
 import { DataFetchingService } from '@app/modules/data-fetching/data-fetching.service';
 
 @ApiTags('Data Fetching')
 @Controller('data-fetching')
+@ApiBearerAuth()
 export class DataFetchingController {
   constructor(private readonly dataFetchingService: DataFetchingService) {}
 

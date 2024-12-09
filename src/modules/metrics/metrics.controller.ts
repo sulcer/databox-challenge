@@ -1,9 +1,15 @@
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Controller, Post } from '@nestjs/common';
 import { MetricsService } from '@app/modules/metrics/metrics.service';
 
 @ApiTags('Metrics')
 @Controller('metrics')
+@ApiBearerAuth()
 export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
 
