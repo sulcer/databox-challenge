@@ -25,6 +25,10 @@ async function bootstrap() {
     `Swagger running on http://localhost:${PORT}${SWAGGER_PATH}`,
     'Bootstrap',
   );
+  Logger.log(
+    `Authentication and Authorization: http://localhost:${PORT}/auth/github`,
+    'Bootstrap',
+  );
 }
 
 (async (): Promise<void> => {

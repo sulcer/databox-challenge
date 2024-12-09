@@ -9,6 +9,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { DataFetchingModule } from '@app/modules/data-fetching/data-fetching.module';
 import { DataboxModule } from '@app/modules/databox/databox.module';
 import { MetricsModule } from '@app/modules/metrics/metrics.module';
+import { AuthModule } from '@app/modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MetricsModule } from '@app/modules/metrics/metrics.module';
     DataFetchingModule,
     DataboxModule,
     MetricsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
