@@ -19,6 +19,7 @@ import { LoggerModule } from '@app/logger/logger.module';
       isGlobal: true,
       validate: validateEnv,
     }),
+    ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
     ScheduleModule.forRoot(),
     DataFetchingModule,

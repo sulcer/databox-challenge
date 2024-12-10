@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataFetchingService } from '@app/modules/data-fetching/data-fetching.service';
 import { DataboxService } from '@app/modules/databox/databox.service';
 import { OrderbookEntry } from '@app/modules/data-fetching/interface/data.fetching.interface';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class MetricsService {
@@ -14,6 +15,7 @@ export class MetricsService {
     private readonly databoxService: DataboxService,
   ) {}
 
+  @Cron('0 * * * *')
   async sendLatestCryptoPrice() {
     const { bars } = await this.dataFetchingService.fetchLatestCryptoBars(
       this.cryptoSymbol,
@@ -35,6 +37,7 @@ export class MetricsService {
     return await this.databoxService.pushData(data);
   }
 
+  @Cron('0 0,12 * * *')
   async sendLatestCryptoOrderBooks() {
     try {
       const { orderbooks } =
@@ -69,6 +72,7 @@ export class MetricsService {
     }
   }
 
+  @Cron('0 1 * * *')
   async sendStockIntraDay() {
     const response = await this.dataFetchingService.fetchStockIntraDay(
       this.stockSymbol,
@@ -99,6 +103,7 @@ export class MetricsService {
     return await this.databoxService.pushData(data);
   }
 
+  @Cron('0 1 * * *')
   async sendStockVolume() {
     const response = await this.dataFetchingService.fetchDailyStockVolume(
       this.stockSymbol,
