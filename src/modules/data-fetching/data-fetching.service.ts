@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import {
@@ -7,6 +7,7 @@ import {
   AlphaVantageResponse,
 } from '@app/modules/data-fetching/interface/data.fetching.interface';
 import { ConfigService } from '@nestjs/config';
+import { CustomLogger } from '@app/logger/logger.service';
 
 @Injectable()
 export class DataFetchingService {
@@ -17,6 +18,7 @@ export class DataFetchingService {
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
+    @Inject('Logger') private readonly logger: CustomLogger,
   ) {
     this.apiUrl = this.configService.get('ALPACA_API_URL');
     this.alphaVantageApi = this.configService.get('ALPHA_VANTAGE_API_URL');
@@ -34,6 +36,7 @@ export class DataFetchingService {
       console.log(response.data);
       return response.data;
     } catch (error) {
+      this.logger.error(`Error: ${error}`, 'DataFetchingService');
       throw error;
     }
   }
@@ -51,6 +54,7 @@ export class DataFetchingService {
       console.log(response.data);
       return response.data;
     } catch (error) {
+      this.logger.error(`Error: ${error}`, 'DataFetchingService');
       throw error;
     }
   }
@@ -76,6 +80,7 @@ export class DataFetchingService {
       console.log(response.data);
       return response.data;
     } catch (error) {
+      this.logger.error(`Error: ${error}`, 'DataFetchingService');
       throw error;
     }
   }
@@ -97,6 +102,7 @@ export class DataFetchingService {
       console.log(response.data);
       return response.data;
     } catch (error) {
+      this.logger.error(`Error: ${error}`, 'DataFetchingService');
       throw error;
     }
   }

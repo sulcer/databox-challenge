@@ -61,6 +61,7 @@ export class DataboxService {
       return responseBody;
     } catch (error) {
       console.log('Error pushing data:', error);
+      this.logger.error(`Error: ${error}`, 'DataboxService');
       throw error;
     }
   }
