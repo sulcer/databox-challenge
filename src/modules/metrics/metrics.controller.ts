@@ -18,7 +18,7 @@ export class MetricsController {
     description: 'Latest Crypto Price sent to Databox successfully',
   })
   @Post('latest-crypto-price')
-  async getLatestCryptoPrice() {
+  async sendLatestCryptoPrice() {
     return await this.metricsService.sendLatestCryptoPrice();
   }
 
@@ -27,7 +27,7 @@ export class MetricsController {
     description: 'Latest Crypto Order Books sent to Databox successfully',
   })
   @Post('crypto-order-books')
-  async getCryptoOrderBooks() {
+  async sendLatestCryptoOrderBooks() {
     return await this.metricsService.sendLatestCryptoOrderBooks();
   }
 
@@ -36,7 +36,7 @@ export class MetricsController {
     description: 'Stock Intra Day sent to Databox successfully',
   })
   @Post('stock-intra-day')
-  async getStockIntraDay() {
+  async sendStockIntraDay() {
     return await this.metricsService.sendStockIntraDay();
   }
 
@@ -45,7 +45,7 @@ export class MetricsController {
     description: 'Stock Volume sent to Databox successfully',
   })
   @Post('stock-volume')
-  async getStockVolume() {
+  async sendStockVolume() {
     return await this.metricsService.sendStockVolume();
   }
 }
