@@ -33,7 +33,7 @@ export class DataFetchingService {
           headers: { accept: 'application/json' },
         }),
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       this.logger.error(`Error: ${error}`, 'DataFetchingService');
@@ -51,7 +51,7 @@ export class DataFetchingService {
           headers: { accept: 'application/json' },
         }),
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       this.logger.error(`Error: ${error}`, 'DataFetchingService');
@@ -77,7 +77,7 @@ export class DataFetchingService {
           headers: { accept: 'application/json' },
         }),
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       this.logger.error(`Error: ${error}`, 'DataFetchingService');
@@ -99,7 +99,7 @@ export class DataFetchingService {
           headers: { accept: 'application/json' },
         }),
       );
-      console.log(response.data);
+
       return response.data;
     } catch (error) {
       this.logger.error(`Error: ${error}`, 'DataFetchingService');

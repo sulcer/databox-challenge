@@ -23,7 +23,6 @@ export class MetricsService {
 
     const price = bars[this.cryptoSymbol].c;
     const timestamp = bars[this.cryptoSymbol].t;
-    console.log(bars[this.cryptoSymbol].c);
 
     const data = [
       {
@@ -67,8 +66,7 @@ export class MetricsService {
         success: bidResponse.status === 'OK' && askResponse.status === 'OK',
       };
     } catch (error) {
-      console.error('Error sending data to Databox:', error);
-      return { success: false };
+      return { success: false, error };
     }
   }
 

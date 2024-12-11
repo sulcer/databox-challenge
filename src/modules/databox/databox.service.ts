@@ -53,14 +53,14 @@ export class DataboxService {
       const response: ApiResponse<void> =
         await this.api.dataPostRaw(dataPostRequest);
       const responseBody = await response.raw.json();
-      console.log('Data pushed successfully:', responseBody);
+
       this.logger.log(
         `Data: ${JSON.stringify(pushDataArray)}, Response: ${JSON.stringify(responseBody)}`,
         'DataboxService',
       );
+
       return responseBody;
     } catch (error) {
-      console.log('Error pushing data:', error);
       this.logger.error(`Error: ${error}`, 'DataboxService');
       throw error;
     }
