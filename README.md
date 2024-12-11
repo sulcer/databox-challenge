@@ -1,5 +1,11 @@
 # Databox Challenge
 
+## Features
+- **Fetch Cryptocurrency Data**: Fetch cryptocurrency data from Alpaca API
+- **Fetch Stock Data**: Fetch stock data from Alpha Vantage API
+- **Send Data to Databox**: Send data to Databox API
+- **Send Custom Metrics to Databox**: Send custom metrics to Databox
+
 ## Technologies Used
 - Backend Framework: NestJS
 - Authentication: JWT and Github OAuth
